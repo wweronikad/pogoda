@@ -1,0 +1,31 @@
+.location-display {
+  color: white; /* Zmiana koloru czcionki na biały */
+  font-size: 16px; /* Powiększenie czcionki */
+  text-align: left; /* Wyrównanie tekstu do lewej */
+  font-weight: bold; /* Opcjonalnie: pogrubienie czcionki */
+  padding-left: 20px;
+  padding: 10px; /* Dodanie odstępu wewnętrznego */
+  display: flex;
+  align-items: center; /* Ustawienie ikony pinezki i tekstu w jednej linii */
+}
+
+.location-icon {
+  margin-right: 10px; /* Odstęp między ikonką a nazwą lokalizacji */
+  font-size: 26px; /* Rozmiar ikony */
+  color: #ffffff; /* Kolor pinezki */
+}
+
+.location-details {
+  display: flex;
+  flex-direction: column; /* Wyświetlanie tekstu w kolumnie */
+}
+
+.location-city {
+  font-size: 18px; /* Rozmiar tekstu */
+  font-weight: bold; /* Pogrubienie pierwszej linii */
+}
+
+.location-postal, .location-region {
+  font-size: 16px; /* Rozmiar tekstu dla pozostałych linii */
+  margin: 2px 0; /* Małe odstępy między liniami tekstu */
+}

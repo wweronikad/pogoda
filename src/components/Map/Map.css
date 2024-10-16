@@ -1,0 +1,21 @@
+.custom-map {
+  height: 500px !important;
+  width: 90% !important;
+  position: relative;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-top.leaflet-left {
+  top: 100px;
+}
+
+@media (max-width: 768px) {
+  .leaflet-top.leaflet-left {
+    top: 60px;
+  }
+}
+

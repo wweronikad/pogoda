@@ -1,0 +1,45 @@
+https://api.prognozy.ios.edu.pl/v1/PM10/2407 - zanieczyszczenia przez teryt (wczoraj, dzisiaj, jutro) https://api.prognozy.ios.edu.pl/
+https://danepubliczne.imgw.pl/api/data/synop - pogoda teraz https://danepubliczne.imgw.pl/pl/apiinfo
+http://danepubliczne.imgw.pl/api/data/hydro/ - dane hydrologiczne https://danepubliczne.imgw.pl/pl/apiinfo
+https://edwin-meteo.apps.paas.psnc.pl/observationStation/location/52.4038412/16.9261668?active=true&distance=50&page=0&size=50 - dane agrometeorologiczne https://www.edwin.gov.pl/meteo-api
+
+http://smog.imgw.pl/home
+
+
+dane stacje imgw - https://klimat.imgw.pl/pl/jednolite-serie-danych
+https://klimatolodzy.pl/index.php/pl/zasoby-internetowe/bazy-danych-klimatycznych
+http://klimat.icm.edu.pl/
+https://klimat.imgw.pl/pl/meta-dane/
+
+
+wspolrzedne hydro
+https://hydro-back.imgw.pl/station/hydro/status?id=151180050
+
+-- czas z api 
+    https://worldtimeapi.org/
+    https://timeapi.io/swagger/index.html
+
+-- wyświetlanie tła strony w zależności od czasu i pogody (może inne kolory)
+
+-- wyświetlanie ikon pogody w zależności od czasu i pogody
+
+--wyświelanie ikon zanieczyszczenia w zależności od stopnia zanieczyszczenia
+
+--funkcje w trybie pełnoekranowym mapy
+        np filtrowanie
+
+--w pogodzie kierunek wiatru zamienić na północny, wschodni południowy itd... ZROBIONE
+
+--input wpisz lokalizację - zamienic na wpisz Miejscowość ZROBIONE
+
+--przeszukiwać stacje w znalezieniu najbliższej po samych lokalizacjach
+    najpierw utworzyc plik z lokalizacjami ZROBIONE     trzeba jeszcze zrobic oddzielne poszkiwanie najbliższej stacji
+                                                        lub przerobić NearestStation na to żeby tworzyło strukturę posortowaną rosnąco względem odległości od lokalizacji
+
+https://wnozigp.maps.arcgis.com/apps/dashboards/a745edd2484947ddb5acf2c63e0aaa09
+
+
+metadane stacji snoptycznych: https://klimat.imgw.pl/pl/jednolite-serie-danych zip -> csv -> geojson
+
+przerobione pobieranie lokalizacji - lokalizacje zostały pobrane na sztywno, raz
+

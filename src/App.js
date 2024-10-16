@@ -1,23 +1,69 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Header from './components/Headers/Header';
+import Map from './components/Map/Map';
+import LocationSearch from './components/UserLocation/LocationSearch';
+import PollutionMarkers from './components/Pollution/PollutionMarkers';
+import WeatherMarkers from './components/Weather/WeatherMarkers';
+import HydroMarkers from './components/Hydro/HydroMarkers';
+import PollutionStationsData from './components/Pollution/PollutionStationsData';
+import PollutionData from './components/Pollution/PollutionData';
+import WeatherStationsData from './components/Weather/WeatherStationsData';
+import HydroStationsData from './components/Hydro/HydroStationsData';
+import NearestStation from './components/NearestStation/NearestStation';
+import backgroundImage from './backgrounds/clear_sky.webp';
 import './App.css';
 
 function App() {
+  const defaultPosition = [52.239087, 21.017461]; // Warszawa
+  const [position, setPosition] = useState(defaultPosition);
+  const [pollutionStations, setPollutionStations] = useState([]);
+  const [combinedPollutionData, setCombinedPollutionData] = useState([]);
+  const [weatherStations, setWeatherStations] = useState([]);
+  const [hydroStations, setHydroStations] = useState([]);
+
+  const handleLocationSelect = (newPosition) => {
+    setPosition(newPosition);
+  };
+
+  const handlePollutionDataFetch = (data) => {
+    setPollutionStations(data);
+  };
+
+  const handleCombinedPollutionDataFetch = (data) => {
+    setCombinedPollutionData((prevData) => [...prevData, ...data]); // Merge with existing data
+  };
+
+  const handleWeatherDataFetch = (data) => {
+    setWeatherStations(data);
+  };
+
+  const handleHydroDataFetch = (data) => {
+    setHydroStations(data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <Header />
+      <LocationSearch onLocationSelect={handleLocationSelect} />
+      <Map 
+        position={position} 
+        markers={[
+          ...PollutionMarkers({ pollutionStations, pollutionData: combinedPollutionData }), 
+          ...WeatherMarkers({ weatherStations }), 
+          ...HydroMarkers({ hydroStations }),
+          { id: 'user', position, iconUrl: '/icons/blue_pin.png', popupContent: 'Twoja lokalizacja' }
+        ]}
+        onZoomAndHighlight={() => {}}
+      />
+      <PollutionStationsData onDataFetch={handlePollutionDataFetch} />
+      <PollutionData stationsData={pollutionStations} onCombinedDataFetch={handleCombinedPollutionDataFetch} />
+      <WeatherStationsData onDataFetch={handleWeatherDataFetch} />
+      <HydroStationsData onDataFetch={handleHydroDataFetch} />
+      <div className="nearest-stations-container">
+        <NearestStation userLocation={position} Stations={combinedPollutionData} nearestStationText={'Najbliższa stacja zanieczyszczeń powietrza:'} type="pollution" />
+        <NearestStation userLocation={position} Stations={weatherStations} nearestStationText={'Najbliższa stacja pogodowa:'} type="weather" />
+        <NearestStation userLocation={position} Stations={hydroStations} nearestStationText={'Najbliższa stacja hydrologiczna:'} type="hydro" />
+      </div>
     </div>
   );
 }

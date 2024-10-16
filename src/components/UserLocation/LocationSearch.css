@@ -1,0 +1,47 @@
+.location-search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* odstęp pomiędzy wierszami */
+  margin: 10px auto;
+  width: 90%; 
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Wyrównanie elementów pionowo */
+}
+
+.first-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 2px solid white; Białe obramowanie */
+  border-radius: 15px; /* Zaokrąglenie rogów dla efektu */
+  padding: 10px; /* Dodanie odstępu wewnętrznego */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Efekt halo */
+}
+
+.first-row .small-column {
+  flex: 1; /* małe kolumny */
+}
+
+.first-row .large-column {
+  flex: 3; /* duża kolumna */
+  text-align: center; /* aby tekst był wycentrowany */
+}
+
+.second-row {
+  justify-content: space-between; /* Wyśrodkowanie elementów w poziomie */
+  align-items: center; /* Wyśrodkowanie elementów w pionie */
+  /* height: auto; Automatyczna wysokość wiersza */
+}
+
+.second-row .half-column {
+  flex: 2;
+  align-items: center; /* Wyśrodkowanie elementów w kolumnie w pionie */
+  justify-content: center; /* Wyśrodkowanie elementów w kolumnie w poziomie */
+}
+
+

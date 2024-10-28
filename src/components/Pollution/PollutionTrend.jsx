@@ -3,7 +3,7 @@ export const calculateTrend = (measurementsData, sensorId) => {
   const validValues = measurementsData.filter(item => item.value !== null).slice(0, 5);
   const validCount = validValues.length;
 
-  if (validCount === 3) {
+  if (validCount >= 3) {
 
     const values = validValues.map(item => item.value);
 

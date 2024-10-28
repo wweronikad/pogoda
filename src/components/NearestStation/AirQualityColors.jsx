@@ -1,21 +1,16 @@
-// AirQualityColors.js
-
-// Mapa nazw parametrów
 const parameterMap = {
     'pył zawieszony PM10': 'PM10',
     'pył zawieszony PM2.5': 'PM2.5',
     'dwutlenek azotu': 'NO2',
     'ozon': 'O3',
     'dwutlenek siarki': 'SO2',
-    'benzen': 'C6H6', // Nowy parametr
-    'tlenek węgla': 'CO', // Nowy parametr
+    'benzen': 'C6H6',
+    'tlenek węgla': 'CO',
   };
   
   export const getPollutionColor = (param, value) => {
-    // Zmapuj nazwę parametru na poprawny klucz
     const mappedParam = parameterMap[param] || param;
   
-    // Upewnij się, że wartość jest liczbą
     const numericValue = parseFloat(value);
     if (isNaN(numericValue)) {
       return 'gray';

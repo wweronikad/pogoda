@@ -1,9 +1,9 @@
 import { Button } from "@nextui-org/react";
-import './LocationButton.css'; // Import the updated CSS
+import './LocationButton.css';
 
 const LocationButton = ({ onClick }) => {
   return (
-    <div className="location-button-container"> {/* Wrapper to apply flex properties */}
+    <div className="location-button-container">
       <Button
         onClick={onClick}
         className="location-button"

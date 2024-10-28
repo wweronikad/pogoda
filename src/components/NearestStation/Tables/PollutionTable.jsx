@@ -2,7 +2,6 @@ import React from 'react';
 import UniversalTable from './UniversalTable';
 import { getPollutionColor } from '../AirQualityColors';
 
-// Mapa nazw parametrów i ich odpowiednich wzorów chemicznych
 const parameterFormulas = {
   'dwutlenek azotu': 'NO2',
   'ozon': 'ozon O3',

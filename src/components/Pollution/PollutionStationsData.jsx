@@ -10,7 +10,6 @@ const PollutionStationsData = ({ onDataFetch }) => {
           const response = await fetch('/localizations/pollution/pollution_xy.geojson');
           const geojson = await response.json();
           
-          // Extract stations data from GeoJSON
           const pollutionStationsData = geojson.features.map(feature => ({
             id: feature.properties.id,
             stationName: feature.properties.name,

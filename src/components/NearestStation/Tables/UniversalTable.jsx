@@ -8,11 +8,11 @@ import {
   TableRow,
   TableCell,
 } from '@nextui-org/react';
-import './UniversalTable.css'; // Import the correct CSS file
+import './UniversalTable.css';
 
 const UniversalTable = ({ columns, data }) => {
   return (
-    <div className="universal-table-container"> {/* Updated class for the container */}
+    <div className="universal-table-container">
       <Table aria-label="Data table" className="universal-table">
         <TableHeader>
           {columns.map((column) => (

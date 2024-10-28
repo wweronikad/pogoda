@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SuggestionsList from './SuggestionsList';
-import './SearchInput.css'; // Import the updated CSS
+import './SearchInput.css';
 
 const SearchInput = ({ search, setSearch, suggestions, handleSearch, isDropdownVisible, setIsDropdownVisible }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -29,7 +29,7 @@ const SearchInput = ({ search, setSearch, suggestions, handleSearch, isDropdownV
   };
 
   return (
-    <div className="input-container"> {/* Wrapper to apply flex properties */}
+    <div className="input-container">
       <input
         className="search-input"
         type="text"

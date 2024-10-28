@@ -49,18 +49,15 @@ const LocationSearch = ({ onLocationSelect }) => {
 
   return (
     <div className="location-search-container">
-      {/* First row with 3 columns */}
       <div className="row first-row">
         <div className="column small-column">
           <LocationDisplay locationName={locationName} />
         </div>
         <div className="column large-column">
-          {/* Placeholder for additional information */}
-          <p>Other info here</p>
+          <p></p>
         </div>
       </div>
 
-      {/* Second row with 2 columns */}
       <div className="row second-row">
         <div className="column half-column">
           <SearchInput

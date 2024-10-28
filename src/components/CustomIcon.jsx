@@ -3,7 +3,6 @@ import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 const CustomIcon = ({ position, popupContent, iconClass = 'fa-solid fa-location-dot', iconColor = 'black', iconSize = '24px' }) => {
-    // Tworzymy niestandardową ikonę za pomocą HTML dla Font Awesome
     const customIcon = L.divIcon({
         html: `<div style="font-size: ${iconSize}; color: ${iconColor};"><i class="${iconClass}"></i></div>`,
         className: 'custom-marker',  

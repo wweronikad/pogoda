@@ -1,39 +1,34 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
+import Sun from './Sun'; // Importujemy komponent do wyświetlania danych o słońcu
 import './LocationDisplay.css';
 
-const LocationDisplay = ({ locationName }) => {
+const LocationDisplay = ({ locationName, position }) => {
   const parseAddress = (locationName) => {
     const addressParts = locationName.split(', ');
-    const streetAndNumber = addressParts[1] ? `${addressParts[1]} ${addressParts[0]}` : null;
-    const city = addressParts[4] || addressParts[1] || addressParts[0];
-    const postalCode = addressParts[6] || null;
-    const region = addressParts[5] || null;
 
-    return {
-      city,
-      streetAndNumber,
-      postalCode,
-      region,
-    };
+    const filteredParts = addressParts.filter(part => {
+      const isRegionOrCountryOrPostalCode = /gmina|powiat|województwo|province|county|Polska|Poland|Germany|France|\d{2}-\d{3}/i.test(part);
+      return !isRegionOrCountryOrPostalCode;
+    });
+
+    const city = filteredParts[filteredParts.length - 1];
+    return { city };
   };
 
-  const { city, streetAndNumber, postalCode, region } = parseAddress(locationName);
+  const { city } = parseAddress(locationName);
 
   return (
     <div className="location-display">
-      <FontAwesomeIcon icon={faMapPin} className="location-icon" />
-      <div className="location-details">
-        {streetAndNumber ? (
-          <div className="location-city">{city}, {streetAndNumber}</div>
-        ) : (
+      <div className="location-left">
+        <FontAwesomeIcon icon={faMapPin} className="location-icon" />
+        <div className="location-details">
           <div className="location-city">{city}</div>
-        )}
-        
-        {postalCode && <div className="location-postal">{postalCode} {city}</div>}
-
-        {region && <div className="location-region">{region}</div>}
+        </div>
+      </div>
+      <div className="sun-info">
+        <Sun position={position} />
       </div>
     </div>
   );

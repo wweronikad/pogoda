@@ -5,7 +5,7 @@ import WindDirections from '../../Weather/WindDirections';
 const WeatherTable = ({ station }) => {
   const columns = [
     { key: 'parameter', label: 'Parametr' },
-    { key: 'latestMeasurement', label: 'Najnowszy pomiar' },
+    { key: 'latestMeasurement', label: `Pomiar z ${station.data_pomiaru || 'Ładowanie...'}` },
   ];
 
   const data = [

@@ -1,5 +1,25 @@
 .station-heading-container {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.distance-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.station-heading-container {
+  color: rgb(47, 31, 90);
+}
+
+details {
+  text-align: center;
+  font-size: 0.9em; /* Zmniejszenie czcionki */
+  margin-top: 10px; /* Odstęp jednej linijki pod odległością */
+}
+
+details ul {
+  list-style-type: none; /* Usunięcie kropek z listy */
+  padding: 0; /* Usuń domyślny padding */
+}
+

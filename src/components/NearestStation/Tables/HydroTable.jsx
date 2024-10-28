@@ -4,7 +4,7 @@ import UniversalTable from './UniversalTable';
 const HydroTable = ({ station }) => {
   const columns = [
     { key: 'parameter', label: 'Parametr' },
-    { key: 'latestMeasurement', label: 'Najnowszy pomiar' },
+    { key: 'latestMeasurement', label: `Pomiar z ${station.stan_wody_data_pomiaru || 'Ładowanie...'}` },
   ];
 
   const data = [

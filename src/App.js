@@ -11,6 +11,7 @@ import WeatherStationsData from './components/Weather/WeatherStationsData';
 import HydroStationsData from './components/Hydro/HydroStationsData';
 import NearestStation from './components/NearestStation/NearestStation';
 import backgroundImage from './backgrounds/clear_sky.webp';
+import Footer from './components/Headers/Footer';
 import './App.css';
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
         <NearestStation userLocation={position} Stations={weatherStations} nearestStationText={'Najbliższa stacja pogodowa:'} type="weather" />
         <NearestStation userLocation={position} Stations={hydroStations} nearestStationText={'Najbliższa stacja hydrologiczna:'} type="hydro" />
       </div>
+      <Footer />
     </div>
   );
 }

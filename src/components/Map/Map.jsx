@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import StationsIconComponent from '../CustomIcon.jsx';
+import CustomIcon from '../CustomIcon.jsx';
 import UserLocationMarker from '../UserLocation/UserLocationMarker.jsx';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import 'leaflet-control-geocoder';
+import Legend from './Legend.jsx';
 import './Map.css';
 
 const Map = ({ position, markers, onZoomAndHighlight }) => {
@@ -19,26 +20,28 @@ const Map = ({ position, markers, onZoomAndHighlight }) => {
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; OpenStreetMap contributors'
+        attribution="&copy; OpenStreetMap contributors"
       />
 
-      {/* Renderowanie markerów */}
+      {/* Render markers */}
       {markers
-        .filter(marker => marker.id !== 'user' && marker.position) // Filtrujemy markery, które mają poprawne pozycje
+        .filter(marker => marker.id !== 'user' && marker.position)
         .map(marker => (
-          <StationsIconComponent
+          <CustomIcon
             key={marker.id}
-            position={marker.position} // Przekazujemy pozycję markera
-            iconUrl={marker.iconUrl} // Przekazujemy URL ikony
-            popupContent={marker.popupContent} // Treść popupu
+            position={marker.position}
+            popupContent={marker.popupContent}
+            iconClass={marker.iconClass}
+            iconColor={marker.iconColor}
+            iconSize={marker.iconSize}
           />
         ))}
 
-      {/* Marker dla pozycji użytkownika */}
-      <UserLocationMarker
-        position={position}
-        iconUrl="/icons/blue_pin.png"
-      />
+      {/* User location marker */}
+      <UserLocationMarker position={position} iconUrl="/icons/blue_pin.png" />
+
+      {/* Legend component */}
+      <Legend markers={markers} />
     </MapContainer>
   );
 };

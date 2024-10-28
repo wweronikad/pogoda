@@ -1,8 +1,9 @@
+// UserLocationMarker.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useMap, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
-const UserLocationMarker = ({ position, iconUrl }) => {
+const UserLocationMarker = ({ position }) => {
   const map = useMap();
   const [initialPopupContent, setInitialPopupContent] = useState('Twoja domyślna lokalizacja');
   const [initialZoomDone, setInitialZoomDone] = useState(false);
@@ -13,7 +14,7 @@ const UserLocationMarker = ({ position, iconUrl }) => {
     if (!initialZoomDone) {
       map.setView(position, 8);
       setTimeout(() => {
-        map.flyTo(position, 12, { duration: 1.5 });  // Zmniejszony zoom do 12
+        map.flyTo(position, 12, { duration: 1.5 });
         setInitialZoomDone(true);
         const popup = L.popup({ closeButton: false })
           .setLatLng(position)
@@ -33,12 +34,13 @@ const UserLocationMarker = ({ position, iconUrl }) => {
     if (initialZoomDone && currentPosition !== position) {
       setInitialPopupContent('Twoja lokalizacja');
       setCurrentPosition(position);
-      map.flyTo(position, 12, { duration: 1.5 });  // Zmniejszony zoom do 12
+      map.flyTo(position, 12, { duration: 1.5 });
     }
   }, [position, initialZoomDone, currentPosition, map]);
 
-  const customIcon = L.icon({
-    iconUrl: iconUrl,
+  const customIcon = L.divIcon({
+    html: `<div style="font-size: 30px; color: black;"><i class="fa-solid fa-circle-user"></i></div>`,
+    className: 'custom-marker',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [0, -41],

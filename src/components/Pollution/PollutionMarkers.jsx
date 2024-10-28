@@ -1,20 +1,24 @@
+// PollutionMarkers.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { getPollutionDescription } from './AirQuality'; // Importujemy funkcję do opisu jakości powietrza
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-
-
+import { getPollutionDescription } from './AirQuality';
+import { getColorForIndex } from './ColorUtils'; 
+import TrendIcon from './TrendIcon'; // Import komponentu
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
   const [popupContent, setPopupContent] = useState({});
+  const [worstPollutionIndices, setWorstPollutionIndices] = useState({});
 
   const getWorstPollutionIndex = useCallback((sensors) => {
     let worstIndex = 'Brak danych';
 
     sensors.forEach(sensor => {
-      const paramDescription = getPollutionDescription(sensor.param.paramName, sensor.latestMeasurement ? sensor.latestMeasurement.value : null);
+      const paramDescription = getPollutionDescription(
+        sensor.param.paramName,
+        sensor.latestMeasurement ? sensor.latestMeasurement.value : null
+      );
 
-      if (paramDescription !== 'Brak danych') {
+      if (paramDescription !== 'Brak danych' && paramDescription !== 'brak danych') {
         if (worstIndex === 'Brak danych' || isWorse(paramDescription, worstIndex)) {
           worstIndex = paramDescription;
         }
@@ -33,11 +37,22 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
     const station = pollutionStations.find(station => station.id === stationId);
     if (station) {
       const worstPollutionIndex = getWorstPollutionIndex(sensors);
+      const color = getColorForIndex(worstPollutionIndex || 'unknown'); // Kolor ogólnego indeksu
 
       const popupContent = (
         <div>
           <strong>{station.stationName}</strong><br />
-          <strong>Ogólny indeks jakości powietrza:</strong> {worstPollutionIndex || 'Brak danych'}<br /><br />
+          <strong>Ogólny indeks jakości powietrza: </strong> 
+          <span style={{ color: color }}>
+            {worstPollutionIndex || 'Brak danych'}
+          </span>
+          <i
+            className="fa-regular fa-circle-question"
+            style={{ marginLeft: '5px', cursor: 'pointer' }}
+            title="Najmniej korzystny z indeksów parametrów dla danej stacji."
+            aria-label="Więcej informacji o indeksie jakości powietrza"
+          ></i>
+          <br /><br />
           
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
@@ -50,22 +65,18 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
             </thead>
             <tbody>
               {sensors.map(sensor => {
-                const paramDescription = getPollutionDescription(sensor.param.paramName, sensor.latestMeasurement ? sensor.latestMeasurement.value : null);
+                const paramDescription = getPollutionDescription(
+                  sensor.param.paramName,
+                  sensor.latestMeasurement ? sensor.latestMeasurement.value : null
+                );
 
-                // ikona na podstawie trendu
-                let trendIcon = '';
-                if (sensor.trend === 0) {
-                  trendIcon = '/icons/malejacy.png'; // dla malejącego trendu
-                } else if (sensor.trend === 2) {
-                  trendIcon = '/icons/rosnacy.png'; // dla rosnącego trendu
-                } else {
-                  trendIcon = '/icons/boczny.png'; //dla bocznego trendu
-                }
+                // Pobierz kolor dla paramDescription
+                const measurementColor = getColorForIndex(paramDescription || 'unknown');
 
                 return (
                   <tr key={sensor.id} style={{ borderBottom: '1px solid #ccc' }}>
                     <td style={{ padding: '5px' }}>{sensor.param.paramName}</td>
-                    <td style={{ padding: '5px', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <td style={{ padding: '5px', textAlign: 'center', verticalAlign: 'middle', color: measurementColor, fontWeight: 'bold' }}>
                       {sensor.latestMeasurement ? sensor.latestMeasurement.value : 'Brak danych'}
                     </td>
                     <td style={{ padding: '5px', textAlign: 'center', verticalAlign: 'middle' }}>
@@ -73,13 +84,7 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
                     </td>
                     <td style={{ padding: '5px', textAlign: 'center', verticalAlign: 'middle' }}>
                       {sensor.latestMeasurement && (
-                        <img 
-                          src={trendIcon} 
-                          alt="Trend ikona" 
-                          width="12" 
-                          height="12" 
-                          style={{ verticalAlign: 'middle' }} 
-                        />
+                        <TrendIcon trend={sensor.trend} />
                       )}
                     </td>
                   </tr>
@@ -89,9 +94,15 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
           </table>
         </div>
       );
+
       setPopupContent(prevPopupContent => ({
         ...prevPopupContent,
         [stationId]: popupContent,
+      }));
+
+      setWorstPollutionIndices(prevIndices => ({
+        ...prevIndices,
+        [stationId]: worstPollutionIndex,
       }));
     }
   }, [pollutionStations, getWorstPollutionIndex]);
@@ -112,11 +123,13 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
 
     if (!isNaN(lat) && !isNaN(lon)) {
       const popup = popupContent[station.id] || <div>Ładowanie danych...</div>;
+      const worstIndex = worstPollutionIndices[station.id] || 'Brak danych';
+      const iconColor = getColorForIndex(worstIndex);
 
       return {
         id: station.id,
         position: [lat, lon],
-        iconUrl: <FontAwesomeIcon icon={faLocationDot} style={{ color: 'red' }} />,
+        iconColor: iconColor,
         popupContent: popup,
       };      
     }

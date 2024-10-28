@@ -10,14 +10,14 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
       const fetchPollutionData = async () => {
         try {
           const sensorsPromises = stationsData.map(async (station) => {
-            const sensorsResponse = await axios.get(`https://api.gios.gov.pl/pjp-api/rest/station/sensors/${station.id}`);
+            const sensorsResponse = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.gios.gov.pl/pjp-api/rest/station/sensors/${station.id}`);
             const sensorsData = sensorsResponse.data;
 
             const sensorsWithMeasurements = [];
 
             for (const sensor of sensorsData) {
               try {
-                const measurementsResponse = await axios.get(`https://api.gios.gov.pl/pjp-api/rest/data/getData/${sensor.id}`);
+                const measurementsResponse = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.gios.gov.pl/pjp-api/rest/data/getData/${sensor.id}`);
                 const measurementsData = measurementsResponse.data;
 
                 let latestMeasurement = null;

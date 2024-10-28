@@ -1,0 +1,25 @@
+details {
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 20px;
+  }
+  
+  details ul {
+    list-style-type: none; /* Usunięcie kropek z listy */
+    padding: 0;
+  }
+
+.trend-text {
+  white-space: pre-wrap; /* Zachowuje formatowanie tekstu (nowe linie i spacje) */
+  font-family: monospace; /* Opcjonalnie, możesz użyć czcionki monospace dla lepszej czytelności */
+  margin-left: 20px; /* Opcjonalne wcięcie */
+  font-size: small;
+}
+
+.trend-icon {
+  width: 13px;
+  height: 13px;
+}
+
+
+  

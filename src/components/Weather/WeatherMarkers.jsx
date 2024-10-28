@@ -1,3 +1,4 @@
+// WeatherMarkers.jsx
 import React from 'react';
 import WindDirection from './WindDirections'; // Import nowego komponentu
 
@@ -25,7 +26,9 @@ const WeatherMarkers = ({ weatherStations }) => {
       return {
         id: station.id,
         position: [lat, lon],
-        iconUrl: '/icons/weather_pin.png',
+        iconClass: 'fa-solid fa-cloud', // Używamy klasy ikony Font Awesome
+        iconColor: '#FD287D', // Opcjonalnie ustawiamy kolor ikony
+        iconSize: '20px', // Opcjonalnie ustawiamy rozmiar ikony
         popupContent,
       };
     }

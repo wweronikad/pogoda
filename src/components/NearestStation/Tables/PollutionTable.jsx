@@ -1,6 +1,7 @@
 import React from 'react';
 import UniversalTable from './UniversalTable';
 import { getPollutionColor } from '../AirQualityColors';
+import TrendIcon from '../../Pollution/TrendIcon';
 
 const parameterFormulas = {
   'dwutlenek azotu': 'NO2',
@@ -11,24 +12,32 @@ const parameterFormulas = {
 };
 
 const PollutionTable = ({ station }) => {
+  // Znajdujemy najstarszą datę pomiaru
+  const getOldestMeasurementDate = (sensors) => {
+    if (!sensors || sensors.length === 0) {
+      return 'Brak danych';
+    }
+
+    const dates = sensors
+      .map(sensor => sensor.latestMeasurement ? new Date(sensor.latestMeasurement.date) : null)
+      .filter(date => date !== null); // Filtrujemy null wartości, jeśli są
+
+    if (dates.length === 0) {
+      return 'Brak danych';
+    }
+
+    const oldestDate = new Date(Math.min(...dates)); // Znajdujemy najstarszą datę
+    return oldestDate.toISOString().replace('T', ' ').split('.')[0]; // Formatowanie daty
+  };
+
+  const oldestDate = getOldestMeasurementDate(station.sensors);
+
+  // Definiujemy kolumny (już bez kolumny Data)
   const columns = [
     { key: 'parameter', label: 'Parametr' },
-    { key: 'latestMeasurement', label: 'Najnowszy pomiar' },
+    { key: 'latestMeasurement', label: `Pomiar z ${oldestDate}` }, // Wyświetlamy najstarszą datę w nagłówku
     { key: 'trend', label: 'Trend' },
   ];
-
-  const displayTrend = (trend) => {
-    switch (trend) {
-      case 0:
-        return 'Malejący';
-      case 1:
-        return 'Boczny';
-      case 2:
-        return 'Rosnący';
-      default:
-        return 'Brak danych';
-    }
-  };
 
   const getParameterWithFormula = (paramName) => {
     const formula = parameterFormulas[paramName];
@@ -59,10 +68,13 @@ const PollutionTable = ({ station }) => {
             ) : (
               'Ładowanie...'
             ),
-            trend:
-              sensor.trend !== null
-                ? displayTrend(sensor.trend)
-                : 'Ładowanie...',
+            trend: sensor.trend !== null ? (
+              <div style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                <TrendIcon trend={sensor.trend} />
+              </div>
+            ) : (
+              'Ładowanie...'
+            ),
           };
         })
         .sort((a, b) => {

@@ -21,16 +21,12 @@
   border-radius: 15px; /* Zaokrąglenie rogów dla efektu */
   padding: 10px; /* Dodanie odstępu wewnętrznego */
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Efekt halo */
-}
+  width: 100%; /* Upewnij się, że kontener ma pełną szerokość */
+  }
 
-.first-row .small-column {
-  flex: 1; /* małe kolumny */
-}
-
-.first-row .large-column {
-  flex: 3; /* duża kolumna */
-  text-align: center; /* aby tekst był wycentrowany */
-}
+  .first-row .column {
+    width: 100%;
+  }
 
 .second-row {
   justify-content: space-between; /* Wyśrodkowanie elementów w poziomie */

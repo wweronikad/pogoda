@@ -16,6 +16,7 @@
     "@turf/turf": "^6.5.0",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
+    "cors-anywhere": "^0.4.4",
     "csv-parser": "^3.0.0",
     "esri-leaflet": "^3.0.12",
     "express": "^4.21.0",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^9.0.1",
-    "http-proxy-middleware": "^3.0.3"
+    "http-proxy-middleware": "^3.0.3",
+    "raw-loader": "^4.0.2"
   }
 }

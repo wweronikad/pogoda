@@ -1,26 +1,21 @@
-// TrendIcon.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TrendIcon = ({ trend }) => {
-  let trendIcon = '';
-
-  if (trend === 0) {
-    trendIcon = '/icons/malejacy.png';
-  } else if (trend === 2) {
-    trendIcon = '/icons/rosnacy.png';
-  } else {
-    trendIcon = '/icons/boczny.png';
-  }
-
+  const icons = ['/icons/malejacy.png', '/icons/boczny.png', '/icons/rosnacy.png'];
   return (
     <img 
-      src={trendIcon} 
+      src={icons[trend] || icons[1]}
       alt="Trend ikona" 
       width="12" 
       height="12" 
-      style={{ verticalAlign: 'middle' }} 
+      style={{ verticalAlign: 'middle' }}
     />
   );
+};
+
+TrendIcon.propTypes = {
+  trend: PropTypes.number.isRequired,
 };
 
 export default TrendIcon;

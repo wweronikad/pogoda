@@ -1,7 +1,6 @@
-/* Sun.css */
 .sun-data {
     display: flex;
-    flex-direction: row; /* Ustawienie elementów w jednym wierszu */
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -10,13 +9,13 @@
   .sun-item {
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Odstęp między elementami */
+    margin-right: 10px;
   }
   
 .sun-icon {
     width: 24px;
     height: 24px;
     margin-right: 5px;
-    fill: white; /* Ustawia kolor ikony na biały */
+    fill: white;
   }  
   

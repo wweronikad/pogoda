@@ -1,6 +1,5 @@
-// MoreInfo.js
 import React from 'react';
-import trendText from '../../../sources/trend'; // Upewnij się, że ścieżka jest poprawna
+import TrendText from '../../../sources/trend';
 import './MoreInfo.css';
 
 const MoreInfo = ({ sources, type }) => {
@@ -17,14 +16,11 @@ const MoreInfo = ({ sources, type }) => {
         ))}
       </ul>
 
-      {/* Zagnieżdżona lista rozwijalna dla typu 'pollution' */}
       {type === 'pollution' && (
         <details>
           <summary>Jak został obliczony trend?</summary>
           <div className="trend-text">
-            <div
-              dangerouslySetInnerHTML={{ __html: trendText }}
-            />
+            <TrendText />
           </div>
         </details>
       )}

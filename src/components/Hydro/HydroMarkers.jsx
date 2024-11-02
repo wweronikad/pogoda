@@ -1,4 +1,3 @@
-// HydroMarkers.jsx
 import React from 'react';
 
 const HydroMarkers = ({ hydroStations }) => {
@@ -27,8 +26,8 @@ const HydroMarkers = ({ hydroStations }) => {
       return {
         id: station.id_stacji,
         position: [lat, lon],
-        iconClass: 'fa-solid fa-droplet', // Używamy klasy ikony Font Awesome
-        iconColor: '#0686AD', // Ustawiamy kolor ikony na ciemnoniebieski
+        iconClass: 'fa-solid fa-droplet', // ikony Font Awesome
+        iconColor: '#0686AD', // ciemnoniebieski
         popupContent,
       };
     }

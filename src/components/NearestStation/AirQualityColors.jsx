@@ -1,4 +1,5 @@
-// Importujemy kolory z ColorUtils.js
+// src/sources/AirQualityColors.jsx
+import PropTypes from 'prop-types';
 import { pollutionColors } from './../Pollution/ColorUtils';
 
 const parameterMap = {
@@ -11,6 +12,16 @@ const parameterMap = {
   'tlenek węgla': 'CO',
 };
 
+const thresholds = {
+  PM10: [20, 50, 80, 110, 150],
+  'PM2.5': [13, 35, 55, 75, 110],
+  O3: [70, 120, 150, 180, 240],
+  NO2: [40, 100, 150, 200, 230],
+  SO2: [50, 100, 200, 350, 500],
+  C6H6: [5, 30],
+  CO: [10000, 30000],
+};
+
 export const getPollutionColor = (param, value) => {
   const mappedParam = parameterMap[param] || param;
   const numericValue = parseFloat(value);
@@ -19,58 +30,27 @@ export const getPollutionColor = (param, value) => {
     return pollutionColors.unknown;
   }
 
-  switch (mappedParam) {
-    case 'PM10':
-      if (numericValue <= 20) return pollutionColors.veryGood;
-      if (numericValue <= 50) return pollutionColors.good;
-      if (numericValue <= 80) return pollutionColors.moderate;
-      if (numericValue <= 110) return pollutionColors.sufficient;
-      if (numericValue <= 150) return pollutionColors.bad;
-      return pollutionColors.veryBad;
+  const getParameterThresholds = thresholds[mappedParam];
+  if (!getParameterThresholds) return pollutionColors.unknown;
 
-    case 'PM2.5':
-      if (numericValue <= 13) return pollutionColors.veryGood;
-      if (numericValue <= 35) return pollutionColors.good;
-      if (numericValue <= 55) return pollutionColors.moderate;
-      if (numericValue <= 75) return pollutionColors.sufficient;
-      if (numericValue <= 110) return pollutionColors.bad;
-      return pollutionColors.veryBad;
+  const colors = [
+    pollutionColors.veryGood,
+    pollutionColors.good,
+    pollutionColors.moderate,
+    pollutionColors.sufficient,
+    pollutionColors.bad,
+    pollutionColors.veryBad,
+  ];
 
-    case 'O3':
-      if (numericValue <= 70) return pollutionColors.veryGood;
-      if (numericValue <= 120) return pollutionColors.good;
-      if (numericValue <= 150) return pollutionColors.moderate;
-      if (numericValue <= 180) return pollutionColors.sufficient;
-      if (numericValue <= 240) return pollutionColors.bad;
-      return pollutionColors.veryBad;
-
-    case 'NO2':
-      if (numericValue <= 40) return pollutionColors.veryGood;
-      if (numericValue <= 100) return pollutionColors.good;
-      if (numericValue <= 150) return pollutionColors.moderate;
-      if (numericValue <= 200) return pollutionColors.sufficient;
-      if (numericValue <= 230) return pollutionColors.bad;
-      return pollutionColors.veryBad;
-
-    case 'SO2':
-      if (numericValue <= 50) return pollutionColors.veryGood;
-      if (numericValue <= 100) return pollutionColors.good;
-      if (numericValue <= 200) return pollutionColors.moderate;
-      if (numericValue <= 350) return pollutionColors.sufficient;
-      if (numericValue <= 500) return pollutionColors.bad;
-      return pollutionColors.veryBad;
-
-    case 'C6H6': // Benzen
-      if (numericValue <= 5) return pollutionColors.veryGood;
-      if (numericValue <= 30) return pollutionColors.bad;
-      return pollutionColors.veryBad;
-
-    case 'CO': // Tlenek węgla
-      if (numericValue <= 10000) return pollutionColors.veryGood;
-      if (numericValue <= 30000) return pollutionColors.bad;
-      return pollutionColors.veryBad;
-
-    default:
-      return pollutionColors.unknown;
+  for (let i = 0; i < getParameterThresholds.length; i++) {
+    if (numericValue <= getParameterThresholds[i]) {
+      return colors[i];
+    }
   }
+  return colors[colors.length - 1];
+};
+
+getPollutionColor.propTypes = {
+  param: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };

@@ -1,4 +1,4 @@
-/* LocationDisplay.css */
+
 .location-display {
   color: white;
   font-size: 16px;
@@ -9,7 +9,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  justify-content: space-between; /* Dodaj to, aby rozmieścić elementy na pełnej szerokości */
+  justify-content: space-between;
 }
 
 .location-left {

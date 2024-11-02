@@ -1,0 +1,25 @@
+
+Technologie Front-end:
+1. JavaScript
+   a. React.js
+   b. Leaflet
+    c. Axios
+2. NextUI
+3. Font Awesome
+
+Technologie Back-end:
+1. Node.js
+2. Express
+
+Bazy danych i API:
+1. GIOŚ API
+2. IMGW
+3. Sunrise-Sunset
+
+Inne:
+1. CORS
+2. CSS
+3. HTML
+
+
+

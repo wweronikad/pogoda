@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
-import Sun from './Sun'; // Importujemy komponent do wyświetlania danych o słońcu
+import Sun from './Sun';
 import './LocationDisplay.css';
 
 const LocationDisplay = ({ locationName, position }) => {
@@ -9,7 +9,7 @@ const LocationDisplay = ({ locationName, position }) => {
     const addressParts = locationName.split(', ');
 
     const filteredParts = addressParts.filter(part => {
-      const isRegionOrCountryOrPostalCode = /gmina|powiat|województwo|province|county|Polska|Poland|Germany|France|\d{2}-\d{3}/i.test(part);
+      const isRegionOrCountryOrPostalCode = /gmina|powiat|województwo|province|county|Polska|Poland|\d{2}-\d{3}/i.test(part);
       return !isRegionOrCountryOrPostalCode;
     });
 

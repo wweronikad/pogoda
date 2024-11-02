@@ -1,19 +1,22 @@
-.search-input {
+.input-container {
+    width: 100%;
+    position: relative;
+  }
+  
+  .search-input {
     width: 95%;
-    height: 6vh; /* Set fixed height to match button and location display */
+    height: 6vh;
     border: none;
     border-radius: 9999px;
     background: linear-gradient(to top right, #88b1e6, #486197);
     color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for consistency */
-    outline: none; /* Remove default input focus outline */
-    padding-left: 1rem; /* Add padding to text */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
     font-size: medium;
-}
-
-/* Change placeholder text color */
-.search-input::placeholder {
-    color: #ffffff; /* Change to desired color */
-    opacity: 1; /* Ensure the color is not affected by browser default opacity */
+  }
+  
+  .search-input::placeholder {
+    color: #ffffff;
     text-align: center;
-}
+  }
+  

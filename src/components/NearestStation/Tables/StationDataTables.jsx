@@ -1,4 +1,3 @@
-// StationData.jsx
 import React from 'react';
 import PollutionTable from './PollutionTable';
 import WeatherTable from './WeatherTable';
@@ -10,16 +9,13 @@ const StationData = ({ station, type }) => {
     return <div>Error: Station data is missing.</div>;
   }
 
-  switch (type) {
-    case 'pollution':
-      return <PollutionTable station={station} />;
-    case 'weather':
-      return <WeatherTable station={station} />;
-    case 'hydro':
-      return <HydroTable station={station} />;
-    default:
-      return null;
-  }
+  const tables = {
+    pollution: <PollutionTable station={station} />,
+    weather: <WeatherTable station={station} />,
+    hydro: <HydroTable station={station} />
+  };
+
+  return tables[type] || null;
 };
 
 export default StationData;

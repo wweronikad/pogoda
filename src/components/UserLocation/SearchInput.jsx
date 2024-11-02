@@ -5,27 +5,9 @@ import './SearchInput.css';
 const SearchInput = ({ search, setSearch, suggestions, handleSearch, isDropdownVisible, setIsDropdownVisible }) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const handleBlur = () => {
-    setTimeout(() => {
-      setIsDropdownVisible(false);
-      setIsFocused(false); // Zresetuj focus, gdy użytkownik wyjdzie z pola
-    }, 100);
-  };
-
-  const handleFocus = () => {
-    if (suggestions.length > 0) {
-      setIsDropdownVisible(true);
-    }
-    setIsFocused(true);
-  };
-
   const handleInputChange = (e) => {
     setSearch(e.target.value);
-    if (e.target.value === '') {
-      setIsDropdownVisible(false);
-    } else {
-      setIsDropdownVisible(true);
-    }
+    setIsDropdownVisible(e.target.value !== '');
   };
 
   return (
@@ -35,11 +17,11 @@ const SearchInput = ({ search, setSearch, suggestions, handleSearch, isDropdownV
         type="text"
         value={search}
         onChange={handleInputChange}
-        placeholder={isFocused && search === '' ? '' : 'Wpisz miejscowość...'}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        placeholder={isFocused ? '' : 'Wpisz miejscowość...'}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setTimeout(() => setIsDropdownVisible(false), 100)}
       />
-      {isDropdownVisible && isFocused && suggestions.length > 0 && (
+      {isDropdownVisible && isFocused && (
         <SuggestionsList
           suggestions={suggestions}
           handleSearch={handleSearch}

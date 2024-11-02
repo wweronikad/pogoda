@@ -4,7 +4,6 @@ import StationDataTable from './Tables/StationDataTables';
 import MoreInfo from './MoreInfo/MoreInfo';
 import './NearestStation.css';
 
-// Importowanie linków z sourcesLinks.js
 import { GIOS_API, IMGW_API, HEALTH_INFORMATION, AIR_QUALITY_INDICES_INFO } from '../../sources/sourcesLinks';
 
 const NearestStation = ({ userLocation, Stations, nearestStationText, type }) => {
@@ -63,7 +62,6 @@ const NearestStation = ({ userLocation, Stations, nearestStationText, type }) =>
     return 'Brak nazwy';
   };
 
-  // Różne źródła w zależności od typu stacji
   const pollutionSources = [
     { text: 'Interfejs programistyczny API GIOŚ', url: GIOS_API },
     { text: 'Informacje zdrowotne', url: HEALTH_INFORMATION },
@@ -97,7 +95,6 @@ const NearestStation = ({ userLocation, Stations, nearestStationText, type }) =>
     <div className="nearest-station">
       {nearestStation ? (
         <>
-          {/* Centered container for the title and station name */}
           <div className="station-heading-container">
             <h3>{nearestStationText}</h3>
             <h4>{getStationName(nearestStation)}</h4>
@@ -107,12 +104,10 @@ const NearestStation = ({ userLocation, Stations, nearestStationText, type }) =>
             <StationDataTable station={nearestStation} type={type} />
           </div>
 
-          {/* Centered distance display */}
           <div className="distance-container">
             Odległość Twojej lokalizacji od najbliższej stacji: {distanceToNearestStation} km
           </div>
 
-          {/* Pass the 'type' prop to MoreInfo */}
           <MoreInfo sources={sources} type={type} />
         </>
       ) : (

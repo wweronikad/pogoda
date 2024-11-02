@@ -1,4 +1,3 @@
-// UserLocationMarker.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useMap, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';

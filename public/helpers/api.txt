@@ -43,3 +43,7 @@ metadane stacji snoptycznych: https://klimat.imgw.pl/pl/jednolite-serie-danych z
 
 przerobione pobieranie lokalizacji - lokalizacje zostały pobrane na sztywno, raz
 
+
+
+https://womanonrails.com/pl/leaflet
+

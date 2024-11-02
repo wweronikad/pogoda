@@ -1,64 +1,73 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
+
+// (mapowanie id na feature
+const mapGeoJsonData = (geoJsonData) => {
+  return geoJsonData.features.reduce((acc, feature) => {
+    acc[feature.properties.id] = feature;
+    return acc;
+  }, {});
+};
 
 const HydroStationsData = ({ onDataFetch }) => {
   const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiDataResponse = await axios.get('https://danepubliczne.imgw.pl/api/data/hydro');
+        const apiData = apiDataResponse.data;
+        
+        const geoJsonResponse = await axios.get('/localizations/hydro/hydro_xy.geojson');
+        const geoJsonData = geoJsonResponse.data;
+        const geoJsonMap = mapGeoJsonData(geoJsonData);
+
+        const mergedData = apiData.map(station => {
+          const matchingGeoJsonFeature = geoJsonMap[station.id_stacji];
+          
+          if (matchingGeoJsonFeature) {
+            const { coordinates } = matchingGeoJsonFeature.geometry;
+            const {
+              alarmValue,
+              warningValue,
+              riverCourseKm,
+              catchmentArea,
+              ...geoJsonProperties
+            } = matchingGeoJsonFeature.properties;
+
+            return {
+              ...station,
+              ...geoJsonProperties,
+              lat: coordinates[1],
+              lon: coordinates[0],
+              alarmValue,
+              warningValue,
+              riverCourseKm,
+              catchmentArea,
+            };
+          }
+
+          return null;
+        }).filter(station => station !== null);          
+
+        onDataFetch(mergedData);
+        setDataFetched(true);
+      } catch (error) {
+        console.error('Error fetching hydro data:', error);
+      }
+    };
+
     if (!dataFetched) {
-      const fetchData = async () => {
-        try {
-          // Fetch hydro data from the API
-          const apiDataResponse = await axios.get('https://danepubliczne.imgw.pl/api/data/hydro');
-          const apiData = apiDataResponse.data;
-          
-          // Fetch coordinates and additional properties from the GeoJSON file
-          const geoJsonResponse = await axios.get('/localizations/hydro/hydro_xy.geojson');
-          const geoJsonData = geoJsonResponse.data;
-
-          // Merge API data with GeoJSON based on the station ID
-          const mergedData = apiData.map(station => {
-            const matchingGeoJsonFeature = geoJsonData.features.find(
-              feature => feature.properties.id === station.id_stacji
-            );
-          
-            if (matchingGeoJsonFeature) {
-              const { coordinates } = matchingGeoJsonFeature.geometry;
-              const {
-                alarmValue,
-                warningValue,
-                riverCourseKm,
-                catchmentArea,
-                ...geoJsonProperties
-              } = matchingGeoJsonFeature.properties;
-              
-              return {
-                ...station,
-                ...geoJsonProperties, // Include other properties from GeoJSON
-                lat: coordinates[1],
-                lon: coordinates[0],
-                alarmValue, 
-                warningValue,
-                riverCourseKm,
-                catchmentArea,
-              };
-            }
-          
-            return null; // Ignore stations without matching GeoJSON data
-          }).filter(station => station !== null);          
-
-          onDataFetch(mergedData);
-          setDataFetched(true);
-        } catch (error) {
-          console.error('Error fetching hydro data:', error);
-        }
-      };
-
       fetchData();
     }
   }, [dataFetched, onDataFetch]);
 
   return null;
+};
+
+HydroStationsData.propTypes = {
+  onDataFetch: PropTypes.func.isRequired,
 };
 
 export default HydroStationsData;

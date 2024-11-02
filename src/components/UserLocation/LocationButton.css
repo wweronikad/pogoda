@@ -9,4 +9,5 @@
   outline: none;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 }

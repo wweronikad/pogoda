@@ -57,12 +57,12 @@ const parameterMap = {
         if (numericValue <= 500) return 'zły';
         return 'bardzo zły';
   
-      case 'C6H6': // Nowy przypadek dla benzenu
+      case 'C6H6':
         if (numericValue <= 5) return 'w normie';
         if (numericValue <= 30) return 'poza normą';
         return 'brak danych';
   
-      case 'CO': // Nowy przypadek dla tlenku węgla
+      case 'CO':
         if (numericValue <= 10000) return 'w normie';
         if (numericValue <= 3000) return 'poza normą';
         return 'brak danych';

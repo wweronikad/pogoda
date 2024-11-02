@@ -7,8 +7,8 @@ import './LocationSearch.css';
 const LocationSearch = ({ onLocationSelect }) => {
   const [search, setSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [locationName, setLocationName] = useState('Warszawa'); // Domyślna lokalizacja początkowa
-  const [position, setPosition] = useState([52.2297, 21.0122]); // Współrzędne Warszawy (początkowe)
+  const [locationName, setLocationName] = useState('Warszawa');
+  const [position, setPosition] = useState([52.2297, 21.0122]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const LocationSearch = ({ onLocationSelect }) => {
           .then((response) => response.json())
           .then((data) => {
             setLocationName(data.display_name || 'Unknown');
-            setPosition([lat, lon]); // Aktualizujemy współrzędne
+            setPosition([lat, lon]);
             onLocationSelect([lat, lon]);
           });
       });
@@ -44,7 +44,7 @@ const LocationSearch = ({ onLocationSelect }) => {
   const handleSearch = (location) => {
     setSearch(location.display_name);
     setLocationName(location.display_name);
-    setPosition([Number(location.lat), Number(location.lon)]); // Aktualizujemy współrzędne
+    setPosition([Number(location.lat), Number(location.lon)]);
     setSuggestions([]);
     setIsDropdownVisible(false);
     onLocationSelect([Number(location.lat), Number(location.lon)]);
@@ -54,7 +54,6 @@ const LocationSearch = ({ onLocationSelect }) => {
     <div className="location-search-container">
       <div className="row first-row">
         <div className="column">
-          {/* Przekazujemy współrzędne do LocationDisplay */}
           <LocationDisplay locationName={locationName} position={position} />
         </div>
       </div>

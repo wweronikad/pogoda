@@ -1,8 +1,7 @@
-// PollutionMarkers.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { getPollutionDescription } from './AirQuality';
 import { getColorForIndex } from './ColorUtils'; 
-import TrendIcon from './TrendIcon'; // Import komponentu
+import TrendIcon from './TrendIcon';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
@@ -37,7 +36,7 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
     const station = pollutionStations.find(station => station.id === stationId);
     if (station) {
       const worstPollutionIndex = getWorstPollutionIndex(sensors);
-      const color = getColorForIndex(worstPollutionIndex || 'unknown'); // Kolor ogólnego indeksu
+      const color = getColorForIndex(worstPollutionIndex || 'unknown');
 
       const popupContent = (
         <div>
@@ -70,7 +69,6 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
                   sensor.latestMeasurement ? sensor.latestMeasurement.value : null
                 );
 
-                // Pobierz kolor dla paramDescription
                 const measurementColor = getColorForIndex(paramDescription || 'unknown');
 
                 return (

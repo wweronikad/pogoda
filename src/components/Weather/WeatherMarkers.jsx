@@ -1,6 +1,6 @@
-// WeatherMarkers.jsx
 import React from 'react';
-import WindDirection from './WindDirections'; // Import nowego komponentu
+import PropTypes from 'prop-types';
+import WindDirection from './WindDirections';
 
 const WeatherMarkers = ({ weatherStations }) => {
   return weatherStations.map(station => {
@@ -26,15 +26,18 @@ const WeatherMarkers = ({ weatherStations }) => {
       return {
         id: station.id,
         position: [lat, lon],
-        iconClass: 'fa-solid fa-cloud', // Używamy klasy ikony Font Awesome
-        iconColor: '#FD287D', // Opcjonalnie ustawiamy kolor ikony
-        iconSize: '20px', // Opcjonalnie ustawiamy rozmiar ikony
+        iconClass: 'fa-solid fa-cloud',
+        iconColor: '#FD287D',
+        iconSize: '20px',
         popupContent,
       };
     }
-
     return null;
   }).filter(Boolean);
+};
+
+WeatherMarkers.propTypes = {
+  weatherStations: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default WeatherMarkers;

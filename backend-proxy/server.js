@@ -1,35 +1,57 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors'); // Dodano pakiet cors
 const app = express();
-const port = 5000; // Możesz zmienić port, jeśli potrzebujesz
+const port = 5000;
 
 // Middleware do obsługi CORS
+app.use(cors({
+  origin: '*',
+  methods: ['GET'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Nagłówki bezpieczeństwa
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
   next();
 });
 
-// Endpoint do pobierania sensorów stacji
-app.get('/api/station/sensors/:stationId', async (req, res) => {
+const apiRouter = express.Router();
+
+// Endpoint do sensorów stacji
+apiRouter.get('/station/sensors/:stationId', async (req, res) => {
   try {
-    const response = await axios.get(`https://api.gios.gov.pl/pjp-api/rest/station/sensors/${req.params.stationId}`);
+    const { stationId } = req.params;
+    const response = await axios.get(`https://api.gios.gov.pl/pjp-api/rest/station/sensors/${stationId}`);
     res.json(response.data);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error(`Błąd pobierania sensorów dla stacji ${req.params.stationId}:`, error.message);
+    res.status(error.response?.status || 500).json({
+      message: 'Błąd pobierania sensorów stacji',
+      details: error.message
+    });
   }
 });
 
-// Endpoint do pobierania danych pomiarowych
-app.get('/api/data/getData/:sensorId', async (req, res) => {
+// Endpoint do  danych pomiarowych
+apiRouter.get('/data/getData/:sensorId', async (req, res) => {
   try {
-    const response = await axios.get(`https://api.gios.gov.pl/pjp-api/rest/data/getData/${req.params.sensorId}`);
+    const { sensorId } = req.params;
+    const response = await axios.get(`https://api.gios.gov.pl/pjp-api/rest/data/getData/${sensorId}`);
     res.json(response.data);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error(`Błąd pobierania danych dla sensora ${req.params.sensorId}:`, error.message);
+    res.status(error.response?.status || 500).json({
+      message: 'Błąd pobierania danych pomiarowych',
+      details: error.message
+    });
   }
 });
 
-// Uruchomienie serwera
+app.use('/api', apiRouter);
+
 app.listen(port, () => {
   console.log(`Serwer proxy działa na porcie ${port}`);
 });

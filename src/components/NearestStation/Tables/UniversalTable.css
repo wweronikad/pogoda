@@ -1,74 +1,81 @@
-/* Add a flex container for table distribution */
 .universal-table-container {
     display: flex;
-    justify-content: center; /* Center the table in the container */
+    justify-content: center;
     align-items: center;
-    width: 100%; /* Ensure the container takes full width */
-    padding: 1rem; /* Add padding around the table container */
-    box-sizing: border-box; /* Include padding in width calculations */
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
-/* Ensure each table takes up full width and fills container */
 .universal-table {
-    flex: 1; /* Allow the table to grow and fill the available space */
-    width: 100%; /* Force the table to take up full width */
-    margin: 0; /* Remove margins */
+    flex: 1;
+    width: 100%;
+    margin: 0;
     border-collapse: collapse;
-    box-sizing: border-box; /* Include padding in width calculations */
+    border-radius: 8px; /* Zaokrąglone rogi */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień */
+    box-sizing: border-box;
 }
 
-/* Make table take full width of its parent container */
+/* Szerokość wewnętrznej tabeli */
 .universal-table table {
-    width: 100%; /* Ensure the internal table takes full width */
-    table-layout: fixed; /* Ensure consistent column widths */
+    width: 100%;
+    table-layout: fixed;
 }
 
-/* Style the table header */
+/* Nagłówek tabeli */
 .universal-table thead {
     background-color: #4682B4;
     color: white;
     font-weight: bold;
 }
 
-/* Style the table rows */
-.universal-table tbody tr {
-    border-bottom: 1px solid #B0C4DE;
-}
-
-/* Alternate row background color */
-.universal-table tbody tr:nth-child(even) {
-    background-color: #F0F8FF;
-}
-
-/* Style the table cells */
-.universal-table th,
-.universal-table td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    word-wrap: break-word; /* Ensure long content breaks to the next line */
-}
-
-/* Add hover effect */
-.universal-table tbody tr:hover {
-    background-color: #D3EAFB;
-}
-
-/* Make table header sticky */
+/* Komórki nagłówka z sticky header */
 .universal-table thead th {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: #4682B4; /* Ensure the background color stays when sticky */
+    background-color: #4682B4;
+    padding: 0.75rem;
+    text-align: left;
 }
 
-/* Optional: Add rounded corners and shadow */
-.universal-table {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.universal-table tbody tr {
+    border-bottom: 1px solid #B0C4DE;
+}
+
+.universal-table tbody tr:nth-child(even) {
+    background-color: #F0F8FF;
+}
+
+.universal-table tbody tr:hover {
+    background-color: #D3EAFB;
+}
+
+.universal-table th,
+.universal-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    word-wrap: break-word;
 }
 
 .air-quality-index {
     padding: 0.5rem;
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    .universal-table th,
+    .universal-table td {
+        padding: 0.5rem; 
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .universal-table th,
+    .universal-table td {
+        font-size: 0.8em;
+    }
 }

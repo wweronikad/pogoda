@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Header from './components/Headers/Header';
 import Map from './components/Map/Map';
 import LocationSearch from './components/UserLocation/LocationSearch';
@@ -31,7 +32,7 @@ function App() {
   };
 
   const handleCombinedPollutionDataFetch = (data) => {
-    setCombinedPollutionData((prevData) => [...prevData, ...data]); // Merge with existing data
+    setCombinedPollutionData((prevData) => [...prevData, ...data]);
   };
 
   const handleWeatherDataFetch = (data) => {
@@ -42,18 +43,20 @@ function App() {
     setHydroStations(data);
   };
 
+  const markers = [
+    ...PollutionMarkers({ pollutionStations, pollutionData: combinedPollutionData }),
+    ...WeatherMarkers({ weatherStations }),
+    ...HydroMarkers({ hydroStations }),
+    { id: 'user', position, iconUrl: '/icons/blue_pin.png', popupContent: 'Twoja lokalizacja' }
+  ];
+
   return (
     <div className="App" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <Header />
       <LocationSearch onLocationSelect={handleLocationSelect} />
       <Map 
         position={position} 
-        markers={[
-          ...PollutionMarkers({ pollutionStations, pollutionData: combinedPollutionData }), 
-          ...WeatherMarkers({ weatherStations }), 
-          ...HydroMarkers({ hydroStations }),
-          { id: 'user', position, iconUrl: '/icons/blue_pin.png', popupContent: 'Twoja lokalizacja' }
-        ]}
+        markers={markers}
         onZoomAndHighlight={() => {}}
       />
       <PollutionStationsData onDataFetch={handlePollutionDataFetch} />
@@ -61,13 +64,21 @@ function App() {
       <WeatherStationsData onDataFetch={handleWeatherDataFetch} />
       <HydroStationsData onDataFetch={handleHydroDataFetch} />
       <div className="nearest-stations-container">
-        <NearestStation userLocation={position} Stations={combinedPollutionData} nearestStationText={'Najbliższa stacja zanieczyszczeń powietrza:'} type="pollution" />
-        <NearestStation userLocation={position} Stations={weatherStations} nearestStationText={'Najbliższa stacja pogodowa:'} type="weather" />
-        <NearestStation userLocation={position} Stations={hydroStations} nearestStationText={'Najbliższa stacja hydrologiczna:'} type="hydro" />
+        <NearestStation userLocation={position} Stations={combinedPollutionData} nearestStationText="Najbliższa stacja zanieczyszczeń powietrza:" type="pollution" />
+        <NearestStation userLocation={position} Stations={weatherStations} nearestStationText="Najbliższa stacja pogodowa:" type="weather" />
+        <NearestStation userLocation={position} Stations={hydroStations} nearestStationText="Najbliższa stacja hydrologiczna:" type="hydro" />
       </div>
       <Footer />
     </div>
   );
 }
+
+App.propTypes = {
+  defaultPosition: PropTypes.arrayOf(PropTypes.number),
+  pollutionStations: PropTypes.arrayOf(PropTypes.object),
+  combinedPollutionData: PropTypes.arrayOf(PropTypes.object),
+  weatherStations: PropTypes.arrayOf(PropTypes.object),
+  hydroStations: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default App;

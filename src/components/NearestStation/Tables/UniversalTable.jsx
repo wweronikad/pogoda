@@ -1,13 +1,6 @@
-// UniversalTable.jsx
 import React from 'react';
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-} from '@nextui-org/react';
+import PropTypes from 'prop-types';
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/react';
 import './UniversalTable.css';
 
 const UniversalTable = ({ columns, data }) => {
@@ -15,14 +8,14 @@ const UniversalTable = ({ columns, data }) => {
     <div className="universal-table-container">
       <Table aria-label="Data table" className="universal-table">
         <TableHeader>
-          {columns.map((column) => (
+          {columns.map(column => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
           ))}
         </TableHeader>
         <TableBody items={data}>
-          {(item) => (
+          {item => (
             <TableRow key={item.id || item.parameter}>
-              {(columnKey) => (
+              {columnKey => (
                 <TableCell>{item[columnKey]}</TableCell>
               )}
             </TableRow>
@@ -31,6 +24,11 @@ const UniversalTable = ({ columns, data }) => {
       </Table>
     </div>
   );
+};
+
+UniversalTable.propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default UniversalTable;

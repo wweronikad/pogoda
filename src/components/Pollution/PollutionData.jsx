@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { calculateTrend } from './PollutionTrend'; // Import the calculateTrend function
+import { calculateTrend } from './PollutionTrend';
 
 const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
   const [dataFetched, setDataFetched] = useState(false);
@@ -13,42 +13,20 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
             const sensorsResponse = await axios.get(`http://localhost:5000/api/station/sensors/${station.id}`);
             const sensorsData = sensorsResponse.data;
 
-            const sensorsWithMeasurements = [];
-
-            for (const sensor of sensorsData) {
-              try {
+            const sensorsWithMeasurements = await Promise.all(
+              sensorsData.map(async (sensor) => {
                 const measurementsResponse = await axios.get(`http://localhost:5000/api/data/getData/${sensor.id}`);
                 const measurementsData = measurementsResponse.data;
-
-                let latestMeasurement = null;
-                for (let i = 0; i < measurementsData.values.length; i++) {
-                  if (measurementsData.values[i].value !== null) {
-                    latestMeasurement = measurementsData.values[i];
-                    break;
-                  }
-                }
-
-                // Calculate the trend for this sensor using the imported function
+                const latestMeasurement = measurementsData.values.find(v => v.value !== null);
                 const trend = calculateTrend(measurementsData.values, sensor.id);
+                return { ...sensor, latestMeasurement, trend };
+              })
+            );
 
-                sensorsWithMeasurements.push({
-                  ...sensor,
-                  latestMeasurement,
-                  trend,  // Add the calculated trend
-                });
-              } catch (error) {
-                console.error('Błąd przy fetchowaniu:', error);
-              }
-            }
-
-            return {
-              ...station,
-              sensors: sensorsWithMeasurements,
-            };
+            return { ...station, sensors: sensorsWithMeasurements };
           });
 
           const stationsWithSensors = await Promise.all(sensorsPromises);
-
           onCombinedDataFetch(stationsWithSensors);
           setDataFetched(true);
         } catch (error) {

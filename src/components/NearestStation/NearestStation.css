@@ -1,25 +1,24 @@
-.station-heading-container {
+.station-heading-container,
+.distance-container {
   text-align: center;
+}
+
+.station-heading-container {
   margin-bottom: 10px;
+  color: rgb(47, 31, 90);
 }
 
 .distance-container {
-  text-align: center;
   margin-top: 20px;
-}
-
-.station-heading-container {
-  color: rgb(47, 31, 90);
 }
 
 details {
   text-align: center;
-  font-size: 0.9em; /* Zmniejszenie czcionki */
-  margin-top: 10px; /* Odstęp jednej linijki pod odległością */
+  font-size: 0.9em;
+  margin-top: 10px;
 }
 
 details ul {
-  list-style-type: none; /* Usunięcie kropek z listy */
-  padding: 0; /* Usuń domyślny padding */
+  list-style-type: none;
+  padding: 0;
 }
-

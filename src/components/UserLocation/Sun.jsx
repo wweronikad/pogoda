@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './Sun.css'; // Import stylów
+import './Sun.css';
 
 const Sun = ({ position }) => {
   const [sunData, setSunData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Funkcja pobierająca dane z API Sunrise-Sunset
     const fetchSunData = async () => {
       const lat = position[0];
       const lng = position[1];

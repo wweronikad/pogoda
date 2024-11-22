@@ -1,12 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import MeasurementChart from './MeasurementChart';
 import { getPollutionDescription } from './AirQuality';
 import { getColorForIndex } from './ColorUtils'; 
 import TrendIcon from './TrendIcon';
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
   const [popupContent, setPopupContent] = useState({});
   const [worstPollutionIndices, setWorstPollutionIndices] = useState({});
+  const [activeTab, setActiveTab] = useState('info'); // 'info' for main data, 'chart' for charts
+
+  const toggleTab = (tab) => {
+    setActiveTab(tab);
+  };
 
   const getWorstPollutionIndex = useCallback((sensors) => {
     let worstIndex = 'Brak danych';
@@ -38,7 +44,7 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
       const worstPollutionIndex = getWorstPollutionIndex(sensors);
       const color = getColorForIndex(worstPollutionIndex || 'unknown');
 
-      const popupContent = (
+      const infoContent = (
         <div>
           <strong>{station.stationName}</strong><br />
           <strong>Ogólny indeks jakości powietrza: </strong> 
@@ -53,6 +59,7 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
           ></i>
           <br /><br />
           
+          {/* Table with sensor data */}
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
@@ -93,9 +100,61 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
         </div>
       );
 
+      // Prepare the chart content with memoization outside of the callback
+      const chartContent = sensors.map(sensor => {
+        const reversedMeasurements = sensor.measurements.values.slice().reverse(); // Reverse measurements
+        return (
+          <div key={sensor.id} style={{ marginBottom: '20px' }}>
+            <strong>{sensor.param.paramName}</strong>
+            <MeasurementChart measurements={{ ...sensor.measurements, values: reversedMeasurements }} />
+          </div>
+        );
+      });
+
+      const popupTabs = (
+        <div>
+          {/* Tab Buttons */}
+          <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '10px' }}>
+            <button
+              onClick={() => toggleTab('info')}
+              style={{
+                padding: '5px 10px',
+                cursor: 'pointer',
+                backgroundColor: activeTab === 'info' ? '#007bff' : '#f0f0f0',
+                color: activeTab === 'info' ? '#fff' : '#000',
+                border: 'none',
+                borderRadius: '5px'
+              }}
+            >
+              Informacje
+            </button>
+            <button
+              onClick={() => toggleTab('chart')}
+              style={{
+                padding: '5px 10px',
+                cursor: 'pointer',
+                backgroundColor: activeTab === 'chart' ? '#007bff' : '#f0f0f0',
+                color: activeTab === 'chart' ? '#fff' : '#000',
+                border: 'none',
+                borderRadius: '5px'
+              }}
+            >
+              Wykresy
+            </button>
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === 'info' ? infoContent : (
+            <div style={{ marginTop: '10px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
+              {chartContent}
+            </div>
+          )}
+        </div>
+      );
+
       setPopupContent(prevPopupContent => ({
         ...prevPopupContent,
-        [stationId]: popupContent,
+        [stationId]: popupTabs,
       }));
 
       setWorstPollutionIndices(prevIndices => ({
@@ -103,7 +162,7 @@ const PollutionMarkers = ({ pollutionStations, pollutionData }) => {
         [stationId]: worstPollutionIndex,
       }));
     }
-  }, [pollutionStations, getWorstPollutionIndex]);
+  }, [pollutionStations, getWorstPollutionIndex, activeTab]);
 
   useEffect(() => {
     if (pollutionData && pollutionData.length > 0) {

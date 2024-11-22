@@ -28,6 +28,15 @@ API:
 https://pl.wikipedia.org/wiki/Interfejs_programowania_aplikacji
 file:///C:/Users/weron/Downloads/Application_Programming_Interface_API_Research_A_R.pdf
 https://aws.amazon.com/what-is/api/
+przykład api
+https://www.usgs.gov/sciencebase-instructions-and-documentation/api-and-web-services
+https://developers.google.com/maps?hl=pl
+https://wiki.openstreetmap.org/wiki/API_v0.6
+https://developer.paypal.com/api/rest/
+https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX%3A32015L2366
+https://www.gov.pl/web/finanse/ramy-prawne-dot-platnosci-i-otwartej-bankowosci-implementacja-dyrektywy-psd2
+https://developers.facebook.com/docs/graph-api/
+https://developer.x.com/en/docs/x-api
 
 
 Node.js

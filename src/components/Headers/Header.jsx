@@ -4,7 +4,7 @@ import './Header.css';
 const Header = () => {
   return (
     <header className="header">
-      <h1>Pogoda API</h1>
+      <h1>EnviroAPI</h1>
     </header>
   );
 };

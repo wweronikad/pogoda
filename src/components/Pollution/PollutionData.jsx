@@ -1,3 +1,4 @@
+// PollutionData.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { calculateTrend } from './PollutionTrend';
@@ -17,9 +18,12 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
               sensorsData.map(async (sensor) => {
                 const measurementsResponse = await axios.get(`http://localhost:5000/api/data/getData/${sensor.id}`);
                 const measurementsData = measurementsResponse.data;
+                
                 const latestMeasurement = measurementsData.values.find(v => v.value !== null);
                 const trend = calculateTrend(measurementsData.values, sensor.id);
-                return { ...sensor, latestMeasurement, trend };
+                
+                // Ensure measurementsData is included
+                return { ...sensor, latestMeasurement, trend, measurements: measurementsData };
               })
             );
 

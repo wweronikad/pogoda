@@ -1,6 +1,5 @@
-// src/sources/AirQualityColors.jsx
 import PropTypes from 'prop-types';
-import { pollutionColors } from './../Pollution/ColorUtils';
+import { pollutionColors } from './../Pollution/AirColorUtils';
 
 const parameterMap = {
   'pył zawieszony PM10': 'PM10',

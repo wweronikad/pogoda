@@ -4,6 +4,10 @@ const cors = require('cors'); // Dodano pakiet cors
 const app = express();
 const port = 5000;
 
+const axiosInstance = axios.create({
+  timeout: 90000 // 10 sekund
+});
+
 // Middleware do obsługi CORS
 app.use(cors({
   origin: '*',
@@ -20,7 +24,6 @@ app.use((req, res, next) => {
 
 const apiRouter = express.Router();
 
-// Endpoint do sensorów stacji
 apiRouter.get('/station/sensors/:stationId', async (req, res) => {
   try {
     const { stationId } = req.params;
@@ -35,7 +38,6 @@ apiRouter.get('/station/sensors/:stationId', async (req, res) => {
   }
 });
 
-// Endpoint do  danych pomiarowych
 apiRouter.get('/data/getData/:sensorId', async (req, res) => {
   try {
     const { sensorId } = req.params;

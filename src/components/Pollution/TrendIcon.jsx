@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 const TrendIcon = ({ trend }) => {
   const icons = ['/icons/malejacy.png', '/icons/boczny.png', '/icons/rosnacy.png'];
+  if (trend === null) {
+    return <span>Brak trendu</span>; // Domyślny tekst, gdy trend jest niedostępny
+  }
   return (
     <img 
       src={icons[trend] || icons[1]}

@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { getPollutionDescription } from './AirQuality';
-import { getColorForIndex } from './ColorUtils';
+import { getColorForIndex } from './AirColorUtils';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, annotationPlugin);
 

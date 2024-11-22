@@ -10,4 +10,6 @@
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  font-size: medium; /* Dodano font-size */
+  font-family: 'Arial', sans-serif; /* Dodano spójny font */
 }

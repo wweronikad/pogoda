@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Header from './components/Headers/Header';
 import Map from './components/Map/Map';
@@ -22,6 +22,12 @@ function App() {
   const [combinedPollutionData, setCombinedPollutionData] = useState([]);
   const [weatherStations, setWeatherStations] = useState([]);
   const [hydroStations, setHydroStations] = useState([]);
+  const [highlightedStations, setHighlightedStations] = useState({
+    pollution: null,
+    weather: null,
+    hydro: null,
+  });
+  
 
   const handleLocationSelect = (newPosition) => {
     setPosition(newPosition);
@@ -43,10 +49,23 @@ function App() {
     setHydroStations(data);
   };
 
+  const handleHighlightStation = useCallback((station, type) => {
+    setHighlightedStations((prev) => ({
+      ...prev,
+      [type]: station,
+    }));
+  }, []);
+
+  const handleShowOnMap = (coordinates) => {
+    if (mapRef.current) {
+      mapRef.current.zoomToMarker(coordinates); // Call zoom function from Map
+    }
+  };
+
   const markers = [
-    ...PollutionMarkers({ pollutionStations, pollutionData: combinedPollutionData }),
-    ...WeatherMarkers({ weatherStations }),
-    ...HydroMarkers({ hydroStations }),
+    ...PollutionMarkers({ pollutionStations, pollutionData: combinedPollutionData, highlightedStation: highlightedStations.pollution }),
+    ...WeatherMarkers({ weatherStations, highlightedStation: highlightedStations.weather }),
+    ...HydroMarkers({ hydroStations, highlightedStation: highlightedStations.hydro }),
     { id: 'user', position, iconUrl: '/icons/blue_pin.png', popupContent: 'Twoja lokalizacja' }
   ];
 
@@ -64,9 +83,27 @@ function App() {
       <WeatherStationsData onDataFetch={handleWeatherDataFetch} />
       <HydroStationsData onDataFetch={handleHydroDataFetch} />
       <div className="nearest-stations-container">
-        <NearestStation userLocation={position} Stations={combinedPollutionData} nearestStationText="Najbliższa stacja zanieczyszczeń powietrza:" type="pollution" />
-        <NearestStation userLocation={position} Stations={weatherStations} nearestStationText="Najbliższa stacja pogodowa:" type="weather" />
-        <NearestStation userLocation={position} Stations={hydroStations} nearestStationText="Najbliższa stacja hydrologiczna:" type="hydro" />
+        <NearestStation 
+          userLocation={position} 
+          Stations={combinedPollutionData} 
+          nearestStationText="Najbliższa stacja zanieczyszczeń powietrza:" 
+          type="pollution" 
+          onHighlightStation={handleHighlightStation}
+        />
+        <NearestStation 
+          userLocation={position} 
+          Stations={weatherStations} 
+          nearestStationText="Najbliższa stacja pogodowa:" 
+          type="weather" 
+          onHighlightStation={handleHighlightStation}
+        />
+        <NearestStation 
+          userLocation={position} 
+          Stations={hydroStations} 
+          nearestStationText="Najbliższa stacja hydrologiczna:" 
+          type="hydro"
+          onHighlightStation={handleHighlightStation}
+        />
       </div>
       <Footer />
     </div>

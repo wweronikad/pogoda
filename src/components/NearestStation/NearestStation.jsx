@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as turf from '@turf/turf';
 import StationDataTable from './Tables/StationDataTables';
 import MoreInfo from './MoreInfo/MoreInfo';
@@ -6,9 +6,11 @@ import './NearestStation.css';
 
 import { GIOS_API, IMGW_API, HEALTH_INFORMATION, AIR_QUALITY_INDICES_INFO } from '../../sources/sourcesLinks';
 
-const NearestStation = ({ userLocation, Stations, nearestStationText, type }) => {
+const NearestStation = ({ userLocation, Stations, nearestStationText, type, onHighlightStation }) => {
   const [nearestStation, setNearestStation] = useState(null);
   const [distanceToNearestStation, setDistanceToNearestStation] = useState(null);
+
+  const previousNearestStation = useRef(null);
 
   useEffect(() => {
     const findNearestStation = () => {
@@ -43,13 +45,21 @@ const NearestStation = ({ userLocation, Stations, nearestStationText, type }) =>
           }
         });
 
-        setNearestStation(nearestStation);
-        setDistanceToNearestStation(nearestDist.toFixed(2));
+        if (nearestStation !== previousNearestStation.current) {
+          setNearestStation(nearestStation);
+          setDistanceToNearestStation(nearestDist.toFixed(2));
+        
+          if (onHighlightStation) {
+            onHighlightStation(nearestStation, type);
+          }
+        
+          previousNearestStation.current = nearestStation;
+        }
       }
     };
 
     findNearestStation();
-  }, [userLocation, Stations]);
+  }, [userLocation, Stations, onHighlightStation, type]);
 
   const getStationName = (station) => {
     if (type === 'pollution') {

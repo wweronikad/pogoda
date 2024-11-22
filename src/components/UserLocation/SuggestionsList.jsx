@@ -14,7 +14,7 @@ const SuggestionsList = ({ suggestions, handleSearch, setIsDropdownVisible, setI
       background: 'white',
       color: 'black',
       border: '1px solid #ccc',
-      width: '30%',
+      width: '100%',
     }}>
       <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
         {suggestions.map((location) => (

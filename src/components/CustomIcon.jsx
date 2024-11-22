@@ -2,14 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import './CustomIcon.css';
 
-const CustomIcon = ({ position, popupContent, iconClass = 'fa-solid fa-location-dot', iconColor = 'black', iconSize = '24px' }) => {
+const CustomIcon = ({
+  position,
+  popupContent,
+  iconClass = 'fa-solid fa-location-dot',
+  iconColor = 'black',
+  iconSize = '24px',
+  isHighlighted = false,
+  markerType = '', // Dodajemy markerType jako nowy prop
+}) => {
+  // Konstrukcja nazwy klasy z uwzględnieniem markerType
+  const markerClassName = `custom-marker${isHighlighted ? ' highlighted-marker' : ''}${markerType ? ` marker-${markerType}` : ''}`;
+
+  const iconHtml = `
+    <div class="${markerClassName}" style="font-size: ${iconSize}; color: ${iconColor};">
+      <i class="${iconClass}"></i>
+    </div>
+  `;
+
   const customIcon = L.divIcon({
-    html: `<div style="font-size: ${iconSize}; color: ${iconColor};"><i class="${iconClass}"></i></div>`,
-    className: 'custom-marker',
+    html: iconHtml,
+    className: '', // Pozostawiamy puste, aby uniknąć domyślnych klas Leaflet
     iconSize: [25, 41],
     iconAnchor: [12, 41],
-    popupAnchor: [0, -41]
+    popupAnchor: [0, -41],
   });
 
   return (
@@ -25,6 +43,8 @@ CustomIcon.propTypes = {
   iconClass: PropTypes.string,
   iconColor: PropTypes.string,
   iconSize: PropTypes.string,
+  isHighlighted: PropTypes.bool,
+  markerType: PropTypes.string, // Dodajemy markerType do propTypes
 };
 
 export default CustomIcon;

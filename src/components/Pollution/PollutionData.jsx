@@ -8,6 +8,7 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
 
   useEffect(() => {
     if (stationsData && stationsData.length > 0 && !dataFetched) {
+
       const fetchPollutionData = async () => {
         try {
           const sensorsPromises = stationsData.map(async (station) => {
@@ -22,7 +23,6 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
                 const latestMeasurement = measurementsData.values.find(v => v.value !== null);
                 const trend = calculateTrend(measurementsData.values, sensor.id);
                 
-                // Ensure measurementsData is included
                 return { ...sensor, latestMeasurement, trend, measurements: measurementsData };
               })
             );
@@ -33,6 +33,7 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
           const stationsWithSensors = await Promise.all(sensorsPromises);
           onCombinedDataFetch(stationsWithSensors);
           setDataFetched(true);
+
         } catch (error) {
           console.error('Błąd przy fetchowaniu:', error);
         }

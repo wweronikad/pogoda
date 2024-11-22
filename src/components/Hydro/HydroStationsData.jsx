@@ -1,67 +1,45 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
-// (mapowanie id na feature
-const mapGeoJsonData = (geoJsonData) => {
-  return geoJsonData.features.reduce((acc, feature) => {
-    acc[feature.properties.id] = feature;
-    return acc;
-  }, {});
-};
+import { API_ENDPOINTS } from './config/apiConfig';
+import { mapGeoJsonData, mergeHydroData } from './utils/hydroDataUtils';
 
 const HydroStationsData = ({ onDataFetch }) => {
   const [dataFetched, setDataFetched] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchHydroData = async () => {
       try {
-        const apiDataResponse = await axios.get('https://danepubliczne.imgw.pl/api/data/hydro');
+        // Fetch API
+        const apiDataResponse = await axios.get(API_ENDPOINTS.HYDRO_DATA);
         const apiData = apiDataResponse.data;
-        
-        const geoJsonResponse = await axios.get('/localizations/hydro/hydro_xy.geojson');
+
+        // Fetch GeoJSON
+        const geoJsonResponse = await axios.get(API_ENDPOINTS.HYDRO_GEOJSON);
         const geoJsonData = geoJsonResponse.data;
+
+        // Map and merge
         const geoJsonMap = mapGeoJsonData(geoJsonData);
+        const mergedData = mergeHydroData(apiData, geoJsonMap);
 
-        const mergedData = apiData.map(station => {
-          const matchingGeoJsonFeature = geoJsonMap[station.id_stacji];
-          
-          if (matchingGeoJsonFeature) {
-            const { coordinates } = matchingGeoJsonFeature.geometry;
-            const {
-              alarmValue,
-              warningValue,
-              riverCourseKm,
-              catchmentArea,
-              ...geoJsonProperties
-            } = matchingGeoJsonFeature.properties;
-
-            return {
-              ...station,
-              ...geoJsonProperties,
-              lat: coordinates[1],
-              lon: coordinates[0],
-              alarmValue,
-              warningValue,
-              riverCourseKm,
-              catchmentArea,
-            };
-          }
-
-          return null;
-        }).filter(station => station !== null);          
-
+        // Pass the merged data to the parent component
         onDataFetch(mergedData);
         setDataFetched(true);
-      } catch (error) {
-        console.error('Error fetching hydro data:', error);
+      } catch (err) {
+        console.error('Error fetching hydro data:', err);
+        setError('Failed to load hydro station data. Please try again.');
       }
     };
 
     if (!dataFetched) {
-      fetchData();
+      fetchHydroData();
     }
   }, [dataFetched, onDataFetch]);
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   return null;
 };

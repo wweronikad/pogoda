@@ -12,7 +12,6 @@ const parameterFormulas = {
   'tlenek węgla': 'CO',
 };
 
-// Funkcja do pobierania najstarszej daty pomiaru
 const getOldestMeasurementDate = (sensors) => {
   if (!sensors || sensors.length === 0) {
     return 'Brak danych';
@@ -30,7 +29,6 @@ const getOldestMeasurementDate = (sensors) => {
   return oldestDate.toISOString().replace('T', ' ').split('.')[0];
 };
 
-// Funkcja do dodania formuły chemicznej do nazwy parametru
 const getParameterWithFormula = (paramName) => {
   const formula = parameterFormulas[paramName.toLowerCase()];
   return formula ? `${paramName} (${formula})` : paramName;
@@ -63,7 +61,7 @@ const PollutionTable = ({ station }) => {
           </span>
         ) : 'Ładowanie...',
         trend: sensor.trend !== null ? (
-          <div style={{ textAlign: 'center' }}> {/* Wyśrodkowanie ikony trendu */}
+          <div style={{ textAlign: 'center' }}>
             <TrendIcon trend={sensor.trend} />
           </div>
         ) : 'Ładowanie...',

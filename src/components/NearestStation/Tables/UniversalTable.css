@@ -12,26 +12,23 @@
     width: 100%;
     margin: 0;
     border-collapse: collapse;
-    border-radius: 8px; /* Zaokrąglone rogi */
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
-/* Szerokość wewnętrznej tabeli */
 .universal-table table {
     width: 100%;
     table-layout: fixed;
 }
 
-/* Nagłówek tabeli */
 .universal-table thead {
     background-color: #4682B4;
     color: white;
     font-weight: bold;
 }
 
-/* Komórki nagłówka z sticky header */
 .universal-table thead th {
     position: sticky;
     top: 0;

@@ -1,0 +1,39 @@
+/* General styles for all markers */
+.custom-marker {
+    position: relative;
+  }
+  
+  /* General highlight effect */
+  .highlighted-marker::before {
+    content: '';
+    position: absolute;
+    top: 3px; /* Adjust these values as needed */
+    left: -4px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgb(99, 122, 171); /* Color with transparency */
+    animation: pulse 2s infinite;
+    z-index: -1; /* Ensure the effect is behind the marker */
+  }
+  
+  .marker-weather.highlighted-marker::before {
+    left: 0px; /* Adjust this value as needed */
+  }
+  
+  /* Animation for pulsing effect */
+  @keyframes pulse {
+    0% {
+      transform: scale(0.5);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(2.0);
+      opacity: 0;
+    }
+  }
+  

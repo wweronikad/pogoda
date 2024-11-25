@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import MeasurementChart from './MeasurementChart';
-import { getPollutionDescription } from './AirQuality';
-import { getColorForIndex } from './AirColorUtils'; 
-import TrendIcon from './TrendIcon';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import React, { useCallback, useEffect, useState } from 'react';
+import { getColorForIndex } from './AirColorUtils';
+import { getPollutionDescription } from './AirQuality';
+import MeasurementChart from './MeasurementChart';
+import TrendIcon from './TrendIcon';
 
 const PollutionMarkers = ({ pollutionStations, pollutionData, highlightedStation }) => {
   const [popupContent, setPopupContent] = useState({});

@@ -60,7 +60,7 @@ const HydroMarkers = ({ hydroStations, highlightedStation }) => {
         iconClass: 'fa-solid fa-droplet', // Font Awesome icon
         iconColor: '#0686AD', // dark blue
         popupContent,
-        isHighlighted, // Highlight if this is the selected station
+        isHighlighted, // Highlight if selected (nearest)
         markerType: 'hydro',
       };
     }

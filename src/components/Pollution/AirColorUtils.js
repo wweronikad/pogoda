@@ -1,4 +1,3 @@
-// ColorUtils.js
 export const pollutionColors = {
   veryGood: '#0D5504', // ciemnozielony
   good: '#14A302', // zielony

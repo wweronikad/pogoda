@@ -1,5 +1,3 @@
-// Sources.js
-
 // API zanieczyszczenia powietrza GIOŚ
 export const GIOS_API = 'https://powietrze.gios.gov.pl/pjp/content/api';
 

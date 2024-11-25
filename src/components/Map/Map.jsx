@@ -34,7 +34,7 @@ const Map = ({ position, markers, onZoomAndHighlight }) => {
               iconClass={marker.iconClass}
               iconColor={marker.iconColor}
               iconSize={marker.iconSize}
-              isHighlighted={marker.isHighlighted} // Dodaj to
+              isHighlighted={marker.isHighlighted}
               markerType={marker.markerType}
             />
           )

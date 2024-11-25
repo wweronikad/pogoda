@@ -58,7 +58,7 @@ function App() {
 
   const handleShowOnMap = (coordinates) => {
     if (mapRef.current) {
-      mapRef.current.zoomToMarker(coordinates); // Call zoom function from Map
+      mapRef.current.zoomToMarker(coordinates);
     }
   };
 

@@ -33,8 +33,8 @@ const WeatherMarkers = ({ weatherStations, highlightedStation }) => {
       return {
         id: station.id,
         position: [lat, lon],
-        iconClass: 'fa-solid fa-cloud', // Font Awesome icon for weather
-        iconColor: '#FD287D', // pink
+        iconClass: 'fa-solid fa-cloud',
+        iconColor: '#FD287D',
         iconSize: '20px',
         popupContent,
         isHighlighted,

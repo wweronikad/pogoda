@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 const PopupTable = ({ title, stationName, data }) => {
   return (
     <div>
-      {/* Station Name Heading */}
       <div style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
         {stationName}
       </div>
 
-      {/* Table Content */}
       <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '5px' }}>
         <thead>
           <tr>

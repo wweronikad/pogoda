@@ -28,7 +28,7 @@ const PollutionData = ({ stationsData, onCombinedDataFetch }) => {
 
       const fetchPollutionData = async () => {
         try {
-          const limit = 100; // Ustaw odpowiedni limit dla jednoczesnych żądań
+          const limit = 30; // odpowiedni limit dla jednoczesnych żądań
 
           const fetchSensorsForStation = async (station) => {
             const sensorsResponse = await axios.get(`http://localhost:5000/api/station/sensors/${station.id}`);

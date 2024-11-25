@@ -30,7 +30,7 @@ const Sun = ({ position }) => {
     fetchSunData();
   }, [position]);
 
-  // Funkcja do konwersji czasu UTC na czas lokalny w Polsce
+  // UTC to local
   const convertTime = (utcTime) => {
     const date = new Date(utcTime);
     return date.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit', hour12: false });

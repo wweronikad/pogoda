@@ -125,7 +125,7 @@ const NearestStation = ({ userLocation, Stations, nearestStationText, type, onHi
           <strong>Ładowanie lokalizacji...</strong>
           <br />
           <div className="distance-container">
-            Odległość Twojej lokalizacji od najbliższej stacji: Ładowanie...
+            Ładowanie informacji ...
           </div>
         </div>
       )}

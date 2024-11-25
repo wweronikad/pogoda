@@ -1,19 +1,13 @@
 .App {
-  /* text-align: center; */
   background-image: url('./backgrounds/clear_sky.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh; /* Ensure the content takes the full height including the header */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 8vh; /* Add padding to account for the fixed header */
-}
-
-.leaflet-container {
-  width: 100%; /* Set the width to 100% */
-  height: 100%; /* Set the height to 100% */
+  padding-top: 8vh;
 }
 
 .nearest-stations-container {

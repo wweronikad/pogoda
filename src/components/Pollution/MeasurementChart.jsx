@@ -17,15 +17,14 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, annota
 const MeasurementChart = ({ measurements }) => {
   if (measurements.values.length === 0) return null;
 
-  // Sort measurements by date in ascending order
+  // sort by date ascending order
   const sortedMeasurements = [...measurements.values].sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  // Take the latest 24 measurements
-  const latestMeasurements = sortedMeasurements.slice(-24); // Get the last 24 measurements
+  // latest 24 measurements
+  const latestMeasurements = sortedMeasurements.slice(-24);
 
-  // Prepare data for the chart
   const chartData = {
-    labels: latestMeasurements.map(item => item.date.slice(11, 16)), // Show time (HH:mm) as labels
+    labels: latestMeasurements.map(item => item.date.slice(11, 16)), // time (HH:mm) as labels
     datasets: [
       {
         label: measurements.key,
@@ -33,7 +32,7 @@ const MeasurementChart = ({ measurements }) => {
         backgroundColor: latestMeasurements.map(item => {
           // Get the pollution description for the current parameter
           const description = getPollutionDescription(measurements.key, item.value);
-          // Get the color for this description
+          // Get the color for description
           return getColorForIndex(description);
         }),
       },
@@ -58,9 +57,9 @@ const MeasurementChart = ({ measurements }) => {
     responsive: true,
     scales: {
       x: {
-        title: { display: false }, // Hide x-axis title
+        title: { display: false },
         grid: { display: false },
-        ticks: { display: true }, // Show x-axis ticks
+        ticks: { display: true },
       },
       y: {
         title: { display: true, text: 'µg/m³' },
@@ -75,7 +74,7 @@ const MeasurementChart = ({ measurements }) => {
         callbacks: {
           label: (context) => {
             const value = context.raw;
-            const time = latestMeasurements[context.dataIndex].date.slice(11, 16); // Time only (HH:mm)
+            const time = latestMeasurements[context.dataIndex].date.slice(11, 16);
             return `${value} µg/m³ at ${time}`;
           },
         },

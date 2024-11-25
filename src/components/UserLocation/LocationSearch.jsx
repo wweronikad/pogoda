@@ -44,7 +44,7 @@ const LocationSearch = ({ onLocationSelect }) => {
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       fetchSuggestions();
-    }, 300); // Opóźnienie 300 ms dla debouncingu
+    }, 300);
 
     return () => clearTimeout(debounceTimeout);
   }, [fetchSuggestions]);
